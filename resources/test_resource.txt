@@ -1,0 +1,14 @@
+*** Settings ***
+Library           RequestsLibrary
+
+*** Variables ***
+${url_test}       http://maps.googleapis.com
+${RestAPIport}    9002
+${httpbinurl}     http://46.101.160.95:8001
+
+*** Keywords ***
+post request with params
+    [Arguments]    ${url}    ${uri}    ${params}
+    Create Session    rest_api    ${url}
+    ${response}    RequestsLibrary.Get Request    rest_api    uri=${uri}    params=${params}
+    [Return]    ${response.content}    ${response.status_code}

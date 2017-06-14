@@ -1,0 +1,11 @@
+*Settings*							
+Library	String						
+Library	SSHLibrary						
+							
+*Keywords*							
+Log To Console	[Arguments]	${message}=2	# log this message to console				
+	BuiltIn.Log To Console	${message}					
+	${random}	Generate Random String	length=3	chars=[NUMBERS]			
+	${return}	Set Variable	${message}${random}				
+	BuiltIn.Log To Console	${return}					
+	[Return]	${return}	# Return \ random value to test case				

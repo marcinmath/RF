@@ -1,0 +1,33 @@
+*** Settings ***
+Resource          ../resources/resource.txt
+Resource          wsb resource.tsv
+Resource          ../resources/${ENV}_resource.txt
+Library           RequestsLibrary
+Library           SudsLibrary
+Library           Collections
+
+*** Variables ***
+${ENV}            qa
+
+*** Test Cases ***
+GetStatistics via Suds
+    SudsLibrary.Create Soap Client    http://www.webservicex.net/Statistics.asmx?WSDL
+    ${dbl array}=    Create Wsdl Object    ArrayOfDouble
+    Append To List    ${dbl array.double}    2.0
+    Append To List    ${dbl array.double}    3.0
+    SudsLibrary.Create Wsdl Object    ArrayOfDouble
+    ${out}    SudsLibrary.Call Soap Method    GetStatistics    ${dbl array}
+    ${key_list}    Create List    Sums    Average    StandardDeviation    skewness    Kurtosis
+    ${value_list}    create list    5.0    2.5    0.5    0.5    -2.5
+    :FOR    ${i}    IN RANGE    5
+    \    log    ${out.${key_list[${i}]}}
+    \    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${out.${key_list[${i}]}}    ${value_list[${i}]}
+
+GetStatistics via Requests
+    ${headers}    Create Dictionary    content-type=text/xml
+    ${url}    Set Variable    http://www.webservicex.net/Statistics.asmx?WSDL
+    Create Session    GetStatistics    ${url}
+    ${body}    Set Variable    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET"> \ \ \ <soapenv:Header/> \ \ \ <soapenv:Body> \ \ \ \ \ \ <web:GetStatistics> \ \ \ \ \ \ \ \ \ <!--Optional:--> \ \ \ \ \ \ \ \ \ <web:X> \ \ \ \ \ \ \ \ \ \ \ \ <!--Zero or more repetitions:--> \ \ \ \ \ \ \ \ \ \ \ \ <web:double>2</web:double> \ \ \ \ \ \ \ \ \ \ \ \ <web:double>4</web:double> \ \ \ \ \ \ \ \ \ \ \ \ <web:double>5</web:double> \ \ \ \ \ \ \ \ \ \ \ \ <web:double>6</web:double> \ \ \ \ \ \ \ \ \ </web:X> \ \ \ \ \ \ </web:GetStatistics> \ \ \ </soapenv:Body> </soapenv:Envelope>
+    ${response}    Post Request    GetStatistics    uri=${EMPTY}    data=${body}    headers=${headers}
+    Should Be Equal As Numbers    ${response.status_code}    200
+    log    ${response.content}

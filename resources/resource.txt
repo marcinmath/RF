@@ -1,0 +1,9 @@
+*** Settings ***
+Library           RequestsLibrary
+
+*** Keywords ***
+post request with params
+    [Arguments]    ${url}    ${uri}    ${params}
+    Create Session    rest_api    ${url}
+    ${response}    RequestsLibrary.Get Request    rest_api    uri=${uri}    params=${params}
+    [Return]    ${response.content}    ${response.status_code}

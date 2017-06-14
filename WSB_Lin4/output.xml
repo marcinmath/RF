@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170429 10:30:03.394" generator="Robot 3.0.2 (Python 2.7.6 on linux2)">
+<suite source="/home/m/Desktop/RobotFramework/WSB_Lin4/REST_WSB_4.robot" id="s1" name="REST WSB 4">
+<test id="s1-t1" name="REST call 1">
+<kw name="Log To Console" library="wsb resource">
+<arguments>
+<arg>test WSB</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${message}</arg>
+</arguments>
+<status status="PASS" endtime="20170429 10:30:03.496" starttime="20170429 10:30:03.496"></status>
+</kw>
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<arguments>
+<arg>length=3</arg>
+<arg>chars=[NUMBERS]</arg>
+</arguments>
+<assign>
+<var>${random}</var>
+</assign>
+<msg timestamp="20170429 10:30:03.497" level="INFO">${random} = 623</msg>
+<status status="PASS" endtime="20170429 10:30:03.497" starttime="20170429 10:30:03.496"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${message}${random}</arg>
+</arguments>
+<assign>
+<var>${return}</var>
+</assign>
+<msg timestamp="20170429 10:30:03.497" level="INFO">${return} = test WSB623</msg>
+<status status="PASS" endtime="20170429 10:30:03.497" starttime="20170429 10:30:03.497"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${return}</arg>
+</arguments>
+<status status="PASS" endtime="20170429 10:30:03.498" starttime="20170429 10:30:03.498"></status>
+</kw>
+<msg timestamp="20170429 10:30:03.498" level="INFO">${stdout} = test WSB623</msg>
+<status status="PASS" endtime="20170429 10:30:03.498" starttime="20170429 10:30:03.495"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>test WSB</arg>
+</arguments>
+<status status="PASS" endtime="20170429 10:30:03.499" starttime="20170429 10:30:03.499"></status>
+</kw>
+<kw name="Should Match Regexp" library="BuiltIn">
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>test WSB\\d{3}</arg>
+</arguments>
+<status status="PASS" endtime="20170429 10:30:03.500" starttime="20170429 10:30:03.499"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${RestAPIport}</arg>
+</arguments>
+<status status="PASS" endtime="20170429 10:30:03.502" starttime="20170429 10:30:03.500"></status>
+</kw>
+<tags>
+<tag>1.0.4</tag>
+<tag>SANITY</tag>
+<tag>STABLE</tag>
+</tags>
+<status status="PASS" endtime="20170429 10:30:03.502" critical="yes" starttime="20170429 10:30:03.494"></status>
+</test>
+<status status="PASS" endtime="20170429 10:30:03.503" starttime="20170429 10:30:03.395"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+<stat fail="0" pass="1">1.0.4</stat>
+<stat fail="0" pass="1">SANITY</stat>
+<stat fail="0" pass="1">STABLE</stat>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="REST WSB 4" pass="1">REST WSB 4</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20170429 10:30:03.490" level="ERROR">Error in file '/home/m/Desktop/RobotFramework/WSB_Lin4/wsb resource.tsv': Importing test library 'SSHLibrary' failed: ImportError: No module named SSHLibrary
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  /usr/local/bin
+  /usr/lib/python2.7
+  /usr/lib/python2.7/plat-x86_64-linux-gnu
+  /usr/lib/python2.7/lib-tk
+  /usr/lib/python2.7/lib-old
+  /usr/lib/python2.7/lib-dynload
+  /usr/local/lib/python2.7/dist-packages
+  /usr/lib/python2.7/dist-packages
+  /usr/lib/python2.7/dist-packages/PILcompat
+  /usr/lib/python2.7/dist-packages/gtk-2.0
+  /usr/lib/python2.7/dist-packages/ubuntu-sso-client
+  /usr/lib/python2.7/dist-packages/wx-2.8-gtk2-unicode</msg>
+</errors>
+</robot>
