@@ -10,6 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
+		pybot --outputdir ${WORKSPACE}/my_robot_results SOAP_WSB.robot
             }
         }
         stage('Deploy') {
