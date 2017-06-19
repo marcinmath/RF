@@ -9,6 +9,17 @@ Resource          resources/${ENV}_resource.txt
 ${ENV}            test
 
 *** Test Cases ***
+NODRYRUN 200
+    [Tags]    1.0..3    getaddress    REST_API    DISABLED    NODRYRUN
+    Create Session    rest_api    ${url_test}
+    ${address}    Set Variable    Polska, Gdańsk, Bzowa
+    ${params}    Create Dictionary    address=${address}    sensor=false
+    ${response}    RequestsLibrary.Get Request    rest_api    uri=/maps/api/geocode/json    params=${params}
+    #walidacja response!
+    log    ${response.status_code}
+    Should Be Equal As Integers    200    ${response.status_code}
+    Run Keyword If    '200' !='${response.status_code}'    Log To Console    Expected 200 but got '${response.status_code}' for status code.
+
 GetAddress 200
     [Tags]    1.0..3    getaddress    REST_API
     Create Session    rest_api    ${url_test}
