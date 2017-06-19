@@ -1,3 +1,9 @@
+#!/usr/bin/env groovy
+
+import hudson.model.*
+import hudson.plugins.jira.*
+import hudson.plugins.warnings.*
+
 pipeline {
     agent any
 
