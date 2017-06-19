@@ -20,7 +20,7 @@ pipeline {
     stages {
          stage('Dry-run') {
             steps{
-	        run """
+	        sh """
                 mkdir -p ${WORKSPACE}/my_robot_results
                 pybot  --dryrun --exclude disabledORnodryrun --outputdir ${WORKSPACE}/my_robot_results ${WORKSPACE}/robot
             """
