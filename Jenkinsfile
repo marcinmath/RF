@@ -5,15 +5,6 @@ import hudson.plugins.jira.*
 import hudson.plugins.warnings.*
 
 
-def run(script) {
-    catchError {
-        sh """set +e
-        source ${WORKSPACE}/robot/utils/test_executor_set_environment.sh
-        activate
-        ${script}"""
-    }
-}
-
 pipeline {
     agent any
 
@@ -21,6 +12,7 @@ pipeline {
          stage('Dry-run') {
             steps{
 	        sh """
+		set +e
                 mkdir -p ${WORKSPACE}/results
 		mkdir -p ${WORKSPACE}/robot
                 pybot  --dryrun --outputdir ${WORKSPACE}/results ${WORKSPACE}/robot
