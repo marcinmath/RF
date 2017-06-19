@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-         stage('Dry run') {
+         stage('Dry-run') {
             run """
                 mkdir -p ${WORKSPACE}/my_robot_results
                 pybot  --dryrun --exclude disabledORnodryrun --outputdir ${WORKSPACE}/my_robot_results ${WORKSPACE}/robot
