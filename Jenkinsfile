@@ -14,7 +14,7 @@ pipeline {
 	        sh """
 		set +e
                 mkdir -p ${WORKSPACE}/results
-                pybot  --dryrun --outputdir ${WORKSPACE}/results ${WORKSPACE}
+                pybot  --dryrun --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}
             """
             step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
@@ -24,7 +24,7 @@ pipeline {
                 sh """
 		set +e
                 mkdir -p ${WORKSPACE}/results
-                pybot --outputdir ${WORKSPACE}/results ${WORKSPACE}/REST_WSB.robot
+                pybot --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}/REST_WSB.robot
             """
 	    step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
