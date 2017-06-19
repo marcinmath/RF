@@ -15,7 +15,7 @@ pipeline {
 		set +e
                 mkdir -p ${WORKSPACE}/results
 		mkdir -p ${WORKSPACE}/robot
-                pybot  --dryrun --outputdir ${WORKSPACE}/results ${WORKSPACE}/robot
+                pybot  --dryrun --outputdir ${WORKSPACE}/results
             """
             step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
