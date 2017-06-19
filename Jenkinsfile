@@ -21,10 +21,11 @@ pipeline {
          stage('Dry-run') {
             steps{
 	        sh """
-                mkdir -p ${WORKSPACE}/my_robot_results
-                pybot  --dryrun --exclude disabledORnodryrun --outputdir ${WORKSPACE}/my_robot_results ${WORKSPACE}/robot
+                mkdir -p ${WORKSPACE}/results
+		mkdir -p ${WORKSPACE}/robot
+                pybot  --dryrun --exclude disabledORnodryrun --outputdir ${WORKSPACE}/results ${WORKSPACE}/robot
             """
-            step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/my_robot_results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
+            step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
         }
         stage('Test') {
