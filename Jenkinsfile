@@ -4,6 +4,16 @@ import hudson.model.*
 import hudson.plugins.jira.*
 import hudson.plugins.warnings.*
 
+
+def run(script) {
+    catchError {
+        sh """set +e
+        source ${WORKSPACE}/robot/utils/test_executor_set_environment.sh
+        activate
+        ${script}"""
+    }
+}
+
 pipeline {
     agent any
 
@@ -29,11 +39,3 @@ pipeline {
 }
 
 
-def run(script) {
-    catchError {
-        sh """set +e
-        source ${WORKSPACE}/robot/utils/test_executor_set_environment.sh
-        activate
-        ${script}"""
-    }
-}
