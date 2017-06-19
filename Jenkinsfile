@@ -21,3 +21,13 @@ pipeline {
         }
     }
 }
+
+
+def run(script) {
+    catchError {
+        sh """set +e
+        source ${WORKSPACE}/robot/utils/test_executor_set_environment.sh
+        activate
+        ${script}"""
+    }
+}
