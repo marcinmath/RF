@@ -29,9 +29,10 @@ pipeline {
 	    step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
         }
-        stage('Deploy') {
+        stage('Publish') {
             steps {
-                echo 'Deploying....'
+                echo 'Publishing....'
+                archiveArtifacts artifacts: 'results/*'
             }
         }
     }
