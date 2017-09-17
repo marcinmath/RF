@@ -31,10 +31,10 @@ pipeline {
             }
         }
         stage('Publish') {
-            if (is_master_branch){
-                echo 'On master branch.'
-            }
             steps {
+		if (is_master_branch){
+                echo 'On master branch.'
+                }
                 echo 'Publishing....'
                 archiveArtifacts artifacts: 'results/*'
             }
