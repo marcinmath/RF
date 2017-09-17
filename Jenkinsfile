@@ -21,20 +21,30 @@ pipeline {
             step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
         }
+
+        stage('RF-LINT') {
+            steps {
+                sh """
+                set +e
+                python -m rflint -A ${WORKSPACE}/utils/rflint.cfg ${WORKSPACE}/ > rflint.log || exit 0
+            """
+                step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'Robot Framework Lint', pattern: '**/rflint.log']], failedTotalHigh: '0'])
+            }
+        }
         stage('Test') {
             steps {
                 sh """
-		set +e
+		        set +e
                 mkdir -p ${WORKSPACE}/results
                 pybot --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}/REST_WSB.robot
             """
-	    step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
+                step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
         }
         stage('Publish') {
             steps {
                 echo 'Publishing....'
-                archiveArtifacts artifacts: 'results/*'
+                archiveArtifacts artifacts: 'results/*,rflint.log'
             }
         }
     }
