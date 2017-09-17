@@ -14,6 +14,7 @@ pipeline {
             steps{
 	        sh """
 		set +e
+		echo  $is_master_branch
                 mkdir -p ${WORKSPACE}/results
                 pybot  --dryrun --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}
             """
@@ -32,9 +33,6 @@ pipeline {
         }
         stage('Publish') {
             steps {
-		if (is_master_branch){
-                echo 'On master branch.'
-                }
                 echo 'Publishing....'
                 archiveArtifacts artifacts: 'results/*'
             }
