@@ -4,6 +4,7 @@ import hudson.model.*
 import hudson.plugins.jira.*
 import hudson.plugins.warnings.*
 
+def is_master_branch = env.BRANCH_NAME.matches("master.*")
 
 pipeline {
     agent any
@@ -30,6 +31,9 @@ pipeline {
             }
         }
         stage('Publish') {
+            if (is_master_branch){
+                echo 'On master branch.'
+            }
             steps {
                 echo 'Publishing....'
                 archiveArtifacts artifacts: 'results/*'
