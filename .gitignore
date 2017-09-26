@@ -9,3 +9,5 @@ out
 gen
 .gitignore
 .idea/
+report.html
+log.html
