@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('RF-LINT') {
+        stage('RFLINT') {
             steps {
                 sh """
                 set +e
@@ -34,7 +34,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh """
-		        set +e
+	        set +e
                 mkdir -p ${WORKSPACE}/results
                 pybot --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}/REST_WSB.robot
             """
