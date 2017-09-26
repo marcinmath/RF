@@ -43,7 +43,11 @@ try {
                 step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
         }
-
+        stage('TestRail export'){
+            sh """
+            echo 'running TestRail export'
+            """
+        }
 
     }
 
