@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 
 import hudson.model.*
-import hudson.plugins.jira.*
 import hudson.plugins.warnings.*
 
 def is_master_branch = env.BRANCH_NAME.matches("master.*")
@@ -22,7 +21,6 @@ try {
                 step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
 
         }
-
         stage('RFLINT') {
                 sh """
                 set +e
@@ -30,21 +28,22 @@ try {
             """
                 step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'Robot Framework Lint', pattern: '**/rflint.log']], failedTotalHigh: '23'])
         }
-        stage('Test') {
+        if(is_master_branch) {
+            stage('Test') {
                 sh """
 	        set +e
                 mkdir -p ${WORKSPACE}/results
-                pybot --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}/REST_WSB.robot
+                pybot --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}/REST.robot
             """
                 step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
 
-        }
-        stage('TestRail export'){
-            sh """
+            }
+            stage('TestRail export') {
+                sh """
             echo 'running TestRail export'
             """
+            }
         }
-
     }
 
 } finally {
