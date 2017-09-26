@@ -40,7 +40,7 @@ try {
             }
             stage('TestRail export') {
                 sh """
-            echo 'running TestRail export'
+            echo 'running TestRail export!'
             """
             }
         }
@@ -50,7 +50,7 @@ try {
     node{
         stage('Publish') {
 
-                echo 'Publishing....'
+                echo 'Publishing arfitacts.'
                 archiveArtifacts artifacts: 'results/*,rflint.log'
         }
     }
