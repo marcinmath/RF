@@ -6,19 +6,21 @@ import hudson.plugins.warnings.*
 
 def is_master_branch = env.BRANCH_NAME.matches("master.*")
 
-pipeline {
-    agent any
-
-    stages {
-         stage('Dry-run') {
+try {
+    node {
+        stage('scm checkout')
+                {
+                    checkout scm
+                }
+        stage('Dry-run') {
             steps{
-	        sh """
-		set +e
-		echo  $is_master_branch
+                sh """
+		        set +e
+		        echo  $is_master_branch
                 mkdir -p ${WORKSPACE}/results
                 pybot  --dryrun --exclude DISABLED --outputdir ${WORKSPACE}/results ${WORKSPACE}
             """
-            step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
+                step([$class: 'RobotPublisher', outputPath: "${WORKSPACE}/results", passThreshold: 100, unstableThreshold: 90, onlyCritical: true, otherFiles: ""])
             }
         }
 
@@ -47,7 +49,11 @@ pipeline {
                 archiveArtifacts artifacts: 'results/*,rflint.log'
             }
         }
+
     }
+
+} finally {
+
 }
 
 
