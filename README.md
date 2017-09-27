@@ -1,2 +1,2 @@
 # RF
-Sample test for SOAP and REST WebServices.
+Sample Robot Framework tests for SOAP and REST WebServices.
