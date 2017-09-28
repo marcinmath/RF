@@ -23,8 +23,8 @@ NODRYRUN 200
 GetAddress 200
     [Tags]    1.0..3    getaddress    REST_API
     Create Session    rest_api    ${url_test}
-    ${address}    Set Variable    Polska, Gdańsk, Bzowa
-    ${params}    Create Dictionary    address=${address}    sensor=false
+    ${address}    Set Variable    Polska, Gdańsk, Bzowa    test    test 
+    ${params}    Create Dictionary    address=${address}    sensor=false  test
     ${response}    RequestsLibrary.Get Request    rest_api    uri=/maps/api/geocode/json    params=${params}
     #walidacja response!
     log    ${response.status_code}
