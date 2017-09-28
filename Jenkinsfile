@@ -26,7 +26,7 @@ try {
                 set +e
                 python -m rflint -A ${WORKSPACE}/utils/rflint.cfg ${WORKSPACE}/ > rflint.log || exit 0
             """
-                step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'Robot Framework Lint', pattern: '**/rflint.log']], failedTotalHigh: '23'])
+                step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'Robot Framework Lint', pattern: '**/rflint.log']], failedTotalHigh: '0'])
         }
         if(is_master_branch) {
             stage('Test') {
